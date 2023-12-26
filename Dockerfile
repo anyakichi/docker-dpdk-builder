@@ -9,8 +9,20 @@ RUN \
         libnuma-dev \
         meson \
         ninja-build \
-        pkg-config \
         python3-pyelftools \
+    # Addtional libraries
+        libbpf-dev \
+        libbsd-dev \
+        libcap2-dev \
+        libelf-dev \
+        libfdt-dev \
+        libibverbs-dev \
+        libipsec-mb-dev \
+        libisal-dev \
+        libjansson-dev \
+        libmnl-dev \
+        libpcap-dev \
+        libssl-dev \
     # Tools for buildenv
         git \
         sudo \
