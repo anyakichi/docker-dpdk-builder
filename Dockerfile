@@ -11,7 +11,7 @@ RUN \
         ninja-build \
         pkg-config \
         python3-pyelftools \
-# Tools for buildenv
+    # Tools for buildenv
         git \
         sudo \
     && rm -rf /var/lib/apt/lists/*
@@ -43,5 +43,6 @@ CMD ["/bin/bash"]
 ARG dpdk_git_url
 ARG dpdk_rev
 ENV \
-  DPDK_GIT_URL=${dpdk_git_url} \
-  DPDK_REV=${dpdk_rev}
+    DPDK_GIT_URL=${dpdk_git_url} \
+    DPDK_MESON_OPTS= \
+    DPDK_REV=${dpdk_rev}

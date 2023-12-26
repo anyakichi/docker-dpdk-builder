@@ -8,5 +8,5 @@ Execute meson in dpdk directory.
 
 ```
 $ cd dpdk
-$ meson build
+$ meson setup ${DPDK_MESON_OPTS} build
 ```
