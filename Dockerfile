@@ -39,7 +39,8 @@ RUN sed -i 's/^#DOTCMDS=.*/DOTCMDS=setup/' /etc/buildenv.conf
 ENTRYPOINT ["/buildenv-entrypoint.sh"]
 CMD ["/bin/bash"]
 
+ARG dpdk_git_url
 ARG dpdk_rev
 ENV \
+  DPDK_GIT_URL=${dpdk_git_url} \
   DPDK_REV=${dpdk_rev}
-
