@@ -2,15 +2,21 @@ name: Publish Docker image
 on:
   push:
   schedule:
-    - cron: '40 17 * * 0'
+    - cron: "40 17 * * 0"
   workflow_dispatch:
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        tag: [main]
+        ubuntu: [latest, jammy, focal]
     steps:
+      - run: |
+          if [[ "${{ matrix.ubuntu }}" == latest ]]; then
+            echo "TAG=${{ github.ref_name }}" >> $GITHUB_ENV
+          else
+            echo "TAG=${{ github.ref_name }}-${{ matrix.ubuntu }}" >> $GITHUB_ENV
+          fi
       - uses: actions/checkout@v4
         with:
           submodules: true
@@ -18,7 +24,7 @@ jobs:
         id: meta
         with:
           images: ghcr.io/anyakichi/dpdk-builder
-          tags: ${{ matrix.tag }}
+          tags: ${{ env.TAG }}
       - if: github.ref == 'refs/heads/main'
         uses: docker/login-action@v2
         with:
@@ -29,6 +35,7 @@ jobs:
         with:
           context: .
           push: ${{ github.ref == 'refs/heads/main' }}
-          build-args: dpdk_rev=${{ matrix.tag  }}
+          build-args: |
+            ubuntu_version=${{ matrix.ubuntu }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

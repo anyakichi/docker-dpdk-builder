@@ -1,4 +1,5 @@
-FROM ubuntu:jammy
+ARG ubuntu_version="latest"
+FROM ubuntu:${ubuntu_version}
 
 # https://doc.dpdk.org/guides/linux_gsg/sys_reqs.html
 RUN \
