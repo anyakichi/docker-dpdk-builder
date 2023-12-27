@@ -9,6 +9,7 @@ RUN \
         libnuma-dev \
         meson \
         ninja-build \
+        pkgconf \
         python3-pyelftools \
     # Addtional libraries
         libbpf-dev \
