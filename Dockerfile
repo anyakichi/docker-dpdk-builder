@@ -2,6 +2,7 @@ ARG ubuntu_version="latest"
 FROM ubuntu:${ubuntu_version}
 
 # https://doc.dpdk.org/guides/linux_gsg/sys_reqs.html
+ARG TARGETPLATFORM
 RUN \
     apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -18,7 +19,6 @@ RUN \
         libelf-dev \
         libfdt-dev \
         libibverbs-dev \
-        libipsec-mb-dev \
         libisal-dev \
         libjansson-dev \
         libmnl-dev \
@@ -27,7 +27,11 @@ RUN \
     # Tools for buildenv
         git \
         sudo \
-    && rm -rf /var/lib/apt/lists/*
+    && if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then \
+        DEBIAN_FRONTEND=noninteractive apt-get install -y \
+           libipsec-mb-dev; \
+       fi \
+    ; rm -rf /var/lib/apt/lists/*
 
 RUN \
     useradd -ms /bin/bash builder \
