@@ -25,6 +25,7 @@ RUN \
         libpcap-dev \
         libssl-dev \
     # Tools for buildenv
+        ccache \
         git \
         sudo \
     && if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then \
