@@ -8,5 +8,8 @@ Execute meson in dpdk directory.
 
 ```
 $ cd dpdk
-$ meson setup ${DPDK_MESON_OPTS} build
+$ if meson configure | grep '^  platform ' &>/dev/null; then \
+    DPDK_PLATFORM_OPTS="-Dplatform=generic"; \
+  fi
+$ meson setup \${DPDK_PLATFORM_OPTS} ${DPDK_MESON_OPTS} build
 ```
