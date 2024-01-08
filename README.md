@@ -60,9 +60,13 @@ Cross-build the latest DPDK for Ubuntu 20.04 ARM64 in the default
 environment (debian:latest).
 
 ```
+$ mkdir dpdk-cross && cd $_
 $ din -v /var/run/docker.sock:/var/run/docker.sock \
     -e CROSS_IMAGE=ubuntu:focal -e CROSS_ARCH=aarch64 \
     ghcr.io/anyakichi/dpdk-builder:main-cross
+builder@dpdk-cross:/build$ extract -x
+builder@dpdk-cross:/build$ setup
+builder@dpdk-cross:/build/dpdk$ build
 ```
 
 `CROSS_IMAGE` must be a debian, ubuntu, fedora, almalinux, rockylinux,
