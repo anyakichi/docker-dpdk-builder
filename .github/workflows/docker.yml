@@ -9,14 +9,24 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ubuntu: [latest, jammy, focal]
+        base: ["debian", "debian:bookworm", "ubuntu", "ubuntu:jammy", "ubuntu:focal"]
     steps:
       - run: |
-          if [[ "${{ matrix.ubuntu }}" == latest ]]; then
-            echo "TAG=${{ github.ref_name }}" >> $GITHUB_ENV
-          else
-            echo "TAG=${{ github.ref_name }}-${{ matrix.ubuntu }}" >> $GITHUB_ENV
+          BASE="${{ matrix.base }}"
+          TAG="${{ github.ref_name }}-${BASE#*:}"
+          echo "TAG=$TAG" >> $GITHUB_ENV
+          echo "TAGS<<EOF" >> $GITHUB_ENV
+          if [[ $BASE == debian ]]; then
+            echo "${{ github.ref_name }}" >> $GITHUB_ENV
           fi
+          echo "$TAG" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          echo "TAGS_CROSS<<EOF" >> $GITHUB_ENV
+          if [[ $BASE == debian ]]; then
+            echo "${{ github.ref_name }}-cross" >> $GITHUB_ENV
+          fi
+          echo "$TAG-cross" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
       - uses: actions/checkout@v4
         with:
           submodules: true
@@ -26,9 +36,8 @@ jobs:
         id: meta
         with:
           images: ghcr.io/anyakichi/dpdk-builder
-          tags: ${{ env.TAG }}
-      - if: github.ref == 'refs/heads/main'
-        uses: docker/login-action@v3
+          tags: ${{ env.TAGS }}
+      - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -36,10 +45,25 @@ jobs:
       - uses: docker/build-push-action@v5
         with:
           context: .
-          push: ${{ github.ref == 'refs/heads/main' }}
+          push: true
           platforms: linux/amd64,linux/arm64
           provenance: false
           build-args: |
-            ubuntu_version=${{ matrix.ubuntu }}
+            base=${{ matrix.base }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      - uses: docker/metadata-action@v4
+        id: meta_cross
+        with:
+          images: ghcr.io/anyakichi/dpdk-builder
+          tags: ${{ env.TAGS_CROSS }}
+      - uses: docker/build-push-action@v5
+        with:
+          context: cross
+          push: true
+          platforms: linux/amd64,linux/arm64
+          provenance: false
+          build-args: |
+            base=ghcr.io/anyakichi/dpdk-builder:${{ env.TAG }}
+          tags: ${{ steps.meta_cross.outputs.tags }}
+          labels: ${{ steps.meta_cross.outputs.labels }}

@@ -1,0 +1,12 @@
+[constants]
+arch = 'x86_64-linux-gnu'
+
+[built-in options]
+c_args = common_flags + ['-target', arch]
+c_link_args = common_flags + ['-target', arch, '--gcc-toolchain=' + sysroot / 'usr']
+
+[host_machine]
+system = 'linux'
+cpu_family = 'x86_64'
+cpu = 'x86_64'
+endian = 'little'

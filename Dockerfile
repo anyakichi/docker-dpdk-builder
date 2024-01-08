@@ -1,5 +1,5 @@
-ARG ubuntu_version="latest"
-FROM ubuntu:${ubuntu_version}
+ARG base=debian
+FROM ${base}
 
 # https://doc.dpdk.org/guides/linux_gsg/sys_reqs.html
 ARG TARGETPLATFORM
@@ -13,6 +13,7 @@ RUN \
         pkgconf \
         python3-pyelftools \
     # Addtional libraries
+        libarchive-dev \
         libbpf-dev \
         libbsd-dev \
         libcap2-dev \
