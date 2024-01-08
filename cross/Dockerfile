@@ -1,4 +1,4 @@
-ARG base
+ARG base=ghcr.io/anyakichi/dpdk-builder:main
 FROM ${base}
 
 RUN \
