@@ -1,3 +1,3 @@
 ```
-? buildenv extract-sysroot -y
+$ buildenv extract-sysroot -y
 ```
