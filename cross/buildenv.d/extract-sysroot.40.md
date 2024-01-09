@@ -46,10 +46,10 @@ $ if [[ ${CROSS_IMAGE} == debian* || ${CROSS_IMAGE} == ubuntu* ]]; then \
         nettle-dev \
     ; \
     for i in libipsec-mb-dev libxdp-dev; do \
-      if apt-cache show "$i" >/dev/null 2>&1; then \
-        DEBIAN_FRONTEND=noninteractive apt-get install -y $i; \
-      fi \
-    done \
+      sudo docker exec -it -e DEBIAN_FRONTEND=noninteractive \$id \
+        bash -c "apt-cache show \$i &>/dev/null && apt-get install -y \$i"; \
+    done; \
+    true;
   fi
 ```
 
