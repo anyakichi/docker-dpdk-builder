@@ -41,15 +41,15 @@ $ if [[ ${CROSS_IMAGE} == debian* || ${CROSS_IMAGE} == ubuntu* ]]; then \
         libpcap-dev \
         libssl-dev \
         libsystemd-dev \
-        libxdp-dev \
         libxml2-dev \
         libzstd-dev \
         nettle-dev \
     ; \
-    if [[ "${CROSS_ARCH:-$(uname -m)}" == x86_64 ]]; then \
-      sudo docker exec -it -e DEBIAN_FRONTEND=noninteractive \$id \
-        apt-get install -y libipsec-mb-dev;\
-    fi \
+    for i in libipsec-mb-dev libxdp-dev; do \
+      if apt-cache show "$i" >/dev/null 2>&1; then \
+        DEBIAN_FRONTEND=noninteractive apt-get install -y $i; \
+      fi \
+    done \
   fi
 ```
 

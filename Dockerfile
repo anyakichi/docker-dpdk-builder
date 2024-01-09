@@ -2,7 +2,6 @@ ARG base=debian
 FROM ${base}
 
 # https://doc.dpdk.org/guides/linux_gsg/sys_reqs.html
-ARG TARGETPLATFORM
 RUN \
     apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -18,7 +17,7 @@ RUN \
         libbpf-dev \
         libbsd-dev \
         libbz2-dev \
-        libcap2-dev \
+        libcap-dev \
         libelf-dev \
         libfdt-dev \
         libibverbs-dev \
@@ -30,7 +29,6 @@ RUN \
         libpcap-dev \
         libssl-dev \
         libsystemd-dev \
-        libxdp-dev \
         libxml2-dev \
         libzstd-dev \
         nettle-dev \
@@ -38,10 +36,11 @@ RUN \
         ccache \
         git \
         sudo \
-    && if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then \
-        DEBIAN_FRONTEND=noninteractive apt-get install -y \
-           libipsec-mb-dev; \
-       fi \
+    && for i in libipsec-mb-dev libxdp-dev; do \
+        if apt-cache show "$i" >/dev/null 2>&1; then \
+            DEBIAN_FRONTEND=noninteractive apt-get install -y $i; \
+        fi \
+       done \
     ; rm -rf /var/lib/apt/lists/*
 
 RUN \
