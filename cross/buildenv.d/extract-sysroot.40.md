@@ -41,6 +41,7 @@ $ if [[ ${CROSS_IMAGE} == debian* || ${CROSS_IMAGE} == ubuntu* ]]; then \
         libpcap-dev \
         libssl-dev \
         libsystemd-dev \
+        libxdp-dev \
         libxml2-dev \
         libzstd-dev \
         nettle-dev \
