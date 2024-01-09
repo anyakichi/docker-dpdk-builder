@@ -23,19 +23,27 @@ $ if [[ ${CROSS_IMAGE} == debian* || ${CROSS_IMAGE} == ubuntu* ]]; then \
     sudo docker exec -it -e DEBIAN_FRONTEND=noninteractive \$id \
       apt-get install -y \
         gcc \
+        libacl1-dev \
         libarchive-dev \
         libbpf-dev \
         libbsd-dev \
+        libbz2-dev \
         libcap-dev \
         libelf-dev \
         libfdt-dev \
         libibverbs-dev \
         libisal-dev \
         libjansson-dev \
+        liblz4-dev \
+        liblzma-dev \
         libmnl-dev \
         libnuma-dev \
         libpcap-dev \
         libssl-dev \
+        libsystemd-dev \
+        libxml2-dev \
+        libzstd-dev \
+        nettle-dev \
     ; \
     if [[ "${CROSS_ARCH:-$(uname -m)}" == x86_64 ]]; then \
       sudo docker exec -it -e DEBIAN_FRONTEND=noninteractive \$id \

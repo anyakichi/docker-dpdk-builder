@@ -13,18 +13,26 @@ RUN \
         pkgconf \
         python3-pyelftools \
     # Addtional libraries
+        libacl1-dev \
         libarchive-dev \
         libbpf-dev \
         libbsd-dev \
+        libbz2-dev \
         libcap2-dev \
         libelf-dev \
         libfdt-dev \
         libibverbs-dev \
         libisal-dev \
         libjansson-dev \
+        liblz4-dev \
+        liblzma-dev \
         libmnl-dev \
         libpcap-dev \
         libssl-dev \
+        libsystemd-dev \
+        libxml2-dev \
+        libzstd-dev \
+        nettle-dev \
     # Tools for buildenv
         ccache \
         git \
