@@ -9,5 +9,5 @@ c_link_args = common_flags + ['-target', arch, '--gcc-toolchain=' + sysroot / 'u
 [host_machine]
 system = 'linux'
 cpu_family = 'x86_64'
-cpu = 'x86-64'
+cpu = 'x86-64-v3'
 endian = 'little'
