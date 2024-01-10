@@ -1,0 +1,6 @@
+[built-in options]
+c_args = common_flags + ['-target', arch_alpine]
+c_link_args = common_flags + ['-target', arch_alpine, '--gcc-toolchain=' + sysroot / 'usr']
+
+[properties]
+pkg_config_libdir = sysroot / 'usr/lib/pkgconfig'

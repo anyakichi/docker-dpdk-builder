@@ -1,0 +1,14 @@
+#!/bin/bash
+
+ARCH=${1:-$(uname -m)}
+DISTRO=$(image2distro "$2")
+
+if [[ ! -e target ]]; then
+    echo --native-file /assets/meson/common.txt
+else
+    echo \
+        --cross-file "/assets/meson/common.txt" \
+        --cross-file "/assets/meson/sysroot.txt" \
+        --cross-file "/assets/meson/arch_${ARCH}.txt" \
+        --cross-file "/assets/meson/distro_${DISTRO}.txt"
+fi

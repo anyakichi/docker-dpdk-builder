@@ -1,0 +1,15 @@
+#!/bin/bash
+
+NAME=${1%:*}
+
+case "$NAME" in
+    almalinux|rockylinux)
+        echo fedora
+        ;;
+    ubuntu)
+        echo debian
+        ;;
+    *)
+        echo "$NAME"
+        ;;
+esac

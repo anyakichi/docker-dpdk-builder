@@ -10,8 +10,10 @@ RUN \
         llvm \
     && rm -rf /var/lib/apt/lists/*
 
-COPY buildenv.d/ /etc/buildenv.d/
 COPY assets/ /assets/
+COPY bin/ /usr/local/bin/
+COPY buildenv.d/ /etc/buildenv.d/
+
 ADD https://raw.githubusercontent.com/yoctoproject/poky/4675bbb757a4755e80914afb6840a640f292fc08/scripts/sysroot-relativelinks.py \
     /usr/local/bin/sysroot-relativelinks
 RUN chmod 755 /usr/local/bin/sysroot-relativelinks
