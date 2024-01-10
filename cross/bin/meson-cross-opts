@@ -3,7 +3,7 @@
 ARCH=${1:-$(uname -m)}
 DISTRO=$(image2distro "$2")
 
-if [[ ! -e target ]]; then
+if [[ ! -e /build/target ]]; then
     echo --native-file /assets/meson/common.txt
 else
     echo \
