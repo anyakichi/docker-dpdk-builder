@@ -5,7 +5,6 @@ cpp = ['ccache', 'clang++']
 ar = 'llvm-ar'
 strip = 'llvm-strip'
 llvm-config = 'llvm-config'
-pcap-config = 'llvm-config'
 pkgconfig = 'pkg-config'
 
 [properties]
