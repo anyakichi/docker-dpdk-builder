@@ -26,7 +26,8 @@ $ sudo docker exec -it -e DEBIAN_FRONTEND=noninteractive \$id \
       libsystemd-dev \
       libxml2-dev \
       libzstd-dev \
-      nettle-dev
+      nettle-dev \
+      ${CROSS_DEBIAN_PKGS}
 $ for i in libipsec-mb-dev libxdp-dev; do \
     sudo docker exec -it -e DEBIAN_FRONTEND=noninteractive \$id \
       bash -c "apt-cache show \$i &>/dev/null && apt-get install -y \$i"; \

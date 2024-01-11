@@ -21,5 +21,6 @@ $ sudo docker exec -it \$id dnf install -y --skip-broken \
       numactl-devel \
       openssl-devel \
       xz-static \
-      zlib-static
+      zlib-static \
+      ${CROSS_FEDORA_PKGS}
 ```

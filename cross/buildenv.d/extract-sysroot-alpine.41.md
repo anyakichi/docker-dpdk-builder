@@ -23,5 +23,6 @@ $ sudo docker exec -it \$id apk add --no-cache \
     numactl-dev \
     openssl-dev \
     rdma-core-dev \
-    zlib-dev
+    zlib-dev \
+    ${CROSS_ALPINE_PKGS}
 ```

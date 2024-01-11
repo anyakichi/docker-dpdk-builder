@@ -16,5 +16,6 @@ $ sudo docker exec -it \$id pacman --noconfirm --needed -S \
     libxdp \
     numactl \
     openssl \
-    rdma-core
+    rdma-core \
+    ${CROSS_ARCHLINUX_PKGS}
 ```

@@ -22,4 +22,8 @@ ARG cross_arch=""
 ARG cross_image=""
 ENV \
     CROSS_ARCH=${cross_arch} \
-    CROSS_IMAGE=${cross_image}
+    CROSS_IMAGE=${cross_image} \
+    CROSS_ALPINE_PKGS="" \
+    CROSS_ARCHLINUX_PKGS="" \
+    CROSS_DEBIAN_PKGS="" \
+    CROSS_FEDORA_PKGS=""
