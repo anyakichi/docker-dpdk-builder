@@ -66,8 +66,8 @@ $ din -v /var/run/docker.sock:/var/run/docker.sock \
 ```
 
 `CROSS_IMAGE` must be a debian, ubuntu, fedora, almalinux, rockylinux,
-or archlinux image.  If not specified, the container will run with
-self-compile mode.
+alpine or archlinux image.  If not specified, the container will run
+with self-compile mode.
 
 `CROSS_ARCH` must be either x86_64 or aarch64.  If not specified, the
 architecture of the container will be used.
