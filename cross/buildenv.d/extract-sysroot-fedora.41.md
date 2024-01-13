@@ -12,7 +12,6 @@ $ sudo docker exec -it \$id dnf install -y --skip-broken \
       libbpf-devel \
       libbsd-devel \
       libfdt-devel \
-      libibverbs \
       libpcap-devel \
       libxdp-devel \
       libxml2-devel \
@@ -20,6 +19,7 @@ $ sudo docker exec -it \$id dnf install -y --skip-broken \
       lz4-devel \
       numactl-devel \
       openssl-devel \
+      rdma-core-devel \
       xz-devel \
       zlib-devel \
       ${CROSS_FEDORA_PKGS}
