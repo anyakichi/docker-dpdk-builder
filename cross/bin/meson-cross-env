@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SYSROOT=/build/target
+SYSROOT=$WORKDIR/target
 
 [[ ! -e $SYSROOT ]] && exit 0
 

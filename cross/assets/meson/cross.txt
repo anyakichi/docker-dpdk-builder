@@ -1,5 +1,4 @@
 [constants]
-sysroot = '/build/target'
 common_flags = ['--sysroot', sysroot, '-target', arch]
 
 [built-in options]
