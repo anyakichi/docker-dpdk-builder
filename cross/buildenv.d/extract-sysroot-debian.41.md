@@ -27,6 +27,7 @@ $ sudo docker exec -it -e DEBIAN_FRONTEND=noninteractive \$id \
       libxml2-dev \
       libzstd-dev \
       nettle-dev \
+      pkgconf \
       ${CROSS_DEBIAN_PKGS}
 $ for i in libipsec-mb-dev libxdp-dev; do \
     sudo docker exec -it -e DEBIAN_FRONTEND=noninteractive \$id \
