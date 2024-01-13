@@ -47,14 +47,6 @@ RUN \
     useradd -ms /bin/bash builder \
     && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-RUN \
-    if [ $(echo "0.60.0\n$(meson --version)" | sort -V | tail -n1) = 0.60.0 ]; then \
-        apt-get update \
-        && DEBIAN_FRONTEND=noninteractive apt-get install -y pip \
-        && rm -rf /var/lib/apt/lists/* \
-        && sudo -Hu builder pip install --user --upgrade meson; \
-    fi
-
 USER builder
 RUN \
     echo '. <(buildenv init)' >> ~/.bashrc \

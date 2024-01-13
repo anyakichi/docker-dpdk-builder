@@ -7,5 +7,5 @@ $ . <(buildenv setup)
 Do build.
 
 ```
-$ meson compile -C build
+$ ninja -C build
 ```
