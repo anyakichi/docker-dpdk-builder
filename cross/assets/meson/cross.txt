@@ -1,0 +1,7 @@
+[constants]
+sysroot = '/build/target'
+common_flags = ['--sysroot', sysroot, '-target', arch]
+
+[built-in options]
+c_args = common_flags
+c_link_args = common_flags + ['--gcc-toolchain=' + sysroot / 'usr']

@@ -1,0 +1,2 @@
+[constants]
+arch = 'aarch64-alpine-linux-musl'

@@ -1,14 +1,16 @@
 #!/bin/bash
 
-ARCH=${1:-$(uname -m)}
-DISTRO=$(image2distro "$2")
+ARCH=${CROSS_ARCH:-$(uname -m)}
+DISTRO=$(image2distro "${CROSS_IMAGE}")
 
-if [[ ! -e /build/target ]]; then
-    echo --native-file /assets/meson/common.txt
+if [[ ${CROSS_IMAGE} ]]; then
+    output=(--cross-file "/assets/meson/common.txt")
+    output+=(--cross-file "/assets/meson/arch_${ARCH}.txt")
+    if [[ ${DISTRO} == alpine ]]; then
+        output+=(--cross-file "/assets/meson/arch_${ARCH}_alpine.txt")
+    fi
+    output+=(--cross-file "/assets/meson/cross.txt")
+    echo "${output[@]}"
 else
-    echo \
-        --cross-file "/assets/meson/common.txt" \
-        --cross-file "/assets/meson/sysroot.txt" \
-        --cross-file "/assets/meson/arch_${ARCH}.txt" \
-        --cross-file "/assets/meson/distro_${DISTRO}.txt"
+    echo --native-file /assets/meson/common.txt
 fi

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+SYSROOT=/build/target
+
+[[ ! -e $SYSROOT ]] && exit 0
+
+PKG_CONFIG_SYSROOT_DIR=$SYSROOT
+PKG_CONFIG_LIBDIR=$(sudo chroot $SYSROOT pkg-config --variable pc_path pkg-config | sed -E 's,(^|:),\1'$SYSROOT',g')
+PKG_CONFIG_PATH="$SYSROOT/usr/local/lib/pkgconfig"
+
+echo "PKG_CONFIG_SYSROOT_DIR=$PKG_CONFIG_SYSROOT_DIR PKG_CONFIG_LIBDIR=$PKG_CONFIG_LIBDIR PKG_CONFIG_PATH=$PKG_CONFIG_PATH"

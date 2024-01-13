@@ -1,10 +1,5 @@
 [constants]
 arch = 'aarch64-linux-gnu'
-arch_alpine = 'aarch64-apline-linux-musl'
-
-[built-in options]
-c_args = common_flags + ['-target', arch]
-c_link_args = common_flags + ['-target', arch, '--gcc-toolchain=' + sysroot / 'usr']
 
 [host_machine]
 system = 'linux'
