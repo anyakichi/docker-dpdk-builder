@@ -1,5 +1,16 @@
 Run a container from base image.
 
 ```
-$ id=\$(sudo docker run --platform $(case "${CROSS_ARCH:-$(uname -m)}" in aarch64) echo arm64;; x86_64) echo amd64;; esac) -d ${CROSS_IMAGE} tail -f /dev/null)
+$ $(
+  if [[ -z "${CROSS_CONTAINER:-}" ]]; then
+    echo "id=\$(sudo docker run --platform $(platform) -d ${CROSS_IMAGE} tail -f /dev/null)"
+  else
+    echo id="$CROSS_CONTAINER"
+    if sudo docker inspect "$CROSS_CONTAINER" &>/dev/null; then
+      echo "\$ sudo docker start \$id"
+    else
+      echo "\$ sudo docker run --name \$id --platform $(platform) -d ${CROSS_IMAGE} tail -f /dev/null"
+    fi
+  fi
+)
 ```

@@ -1,8 +1,6 @@
 Extract sysroot from ${CROSS_IMAGE}.
 
-```
 $(buildenv extract-sysroot -d)
-```
 
 Patch to DPDK for alpine.
 

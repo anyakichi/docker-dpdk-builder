@@ -1,0 +1,10 @@
+#!/bin/bash
+
+case "${CROSS_ARCH:-$(uname -m)}" in
+aarch64)
+    echo arm64
+    ;;
+x86_64)
+    echo amd64
+    ;;
+esac

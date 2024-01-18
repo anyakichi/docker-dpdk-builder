@@ -11,10 +11,10 @@ $ mkdir -p target
 $ sudo docker export \$id | tar -xf - -C target
 ```
 
-Remove the container.
+Remove the temporary container.
 
 ```
-$ sudo docker rm \$id
+$ $([[ -z "${CROSS_CONTAINER:-}" ]] && echo sudo docker rm \$id)
 ```
 
 Change absolute symbolic links to relative ones.
