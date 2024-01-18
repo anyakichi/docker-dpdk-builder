@@ -1,8 +1,8 @@
 Install required packages.
 
 ```
-$ sudo docker exec -it \$id pacman --noconfirm -Syu
-$ sudo docker exec -it \$id pacman --noconfirm --needed -S \
+$ sudo docker exec \$id pacman --noconfirm -Syu
+$ sudo docker exec \$id pacman --noconfirm --needed -S \
     dtc \
     gcc \
     jansson \

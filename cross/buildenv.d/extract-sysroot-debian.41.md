@@ -1,9 +1,9 @@
 Install required packages.
 
 ```
-$ sudo docker exec -it \$id apt-get update
-$ sudo docker exec -it \$id apt-get upgrade -y
-$ sudo docker exec -it -e DEBIAN_FRONTEND=noninteractive \$id \
+$ sudo docker exec \$id apt-get update
+$ sudo docker exec \$id apt-get upgrade -y
+$ sudo docker exec -e DEBIAN_FRONTEND=noninteractive \$id \
     apt-get install -y \
       gcc \
       libacl1-dev \
@@ -30,7 +30,7 @@ $ sudo docker exec -it -e DEBIAN_FRONTEND=noninteractive \$id \
       pkgconf \
       ${CROSS_DEBIAN_PKGS}
 $ for i in libipsec-mb-dev libxdp-dev; do \
-    sudo docker exec -it -e DEBIAN_FRONTEND=noninteractive \$id \
+    sudo docker exec -e DEBIAN_FRONTEND=noninteractive \$id \
       bash -c "apt-cache show \$i &>/dev/null && apt-get install -y \$i"; \
   done; \
   true

@@ -1,8 +1,8 @@
 Install required packages.
 
 ```
-$ sudo docker exec -it \$id apk update
-$ sudo docker exec -it \$id apk add --no-cache \
+$ sudo docker exec \$id apk update
+$ sudo docker exec \$id apk add --no-cache \
     acl-dev \
     bsd-compat-headers \
     bzip2-dev \
