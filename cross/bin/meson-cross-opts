@@ -11,9 +11,9 @@ if [[ $CROSS_IMAGE ]]; then
         output+=(--cross-file "/assets/meson/arch_${ARCH}_alpine.txt")
     fi
     if [[ $WORKDIR != /build ]]; then
-        MESON_FILE="$WORKDIR/target/meson_sysroot.txt"
+        MESON_FILE="$WORKDIR/sysroot/meson_sysroot.txt"
         echo "[constants]" > "$MESON_FILE"
-        echo "sysroot = '$WORKDIR/target'" >> "$MESON_FILE"
+        echo "sysroot = '$WORKDIR/sysroot'" >> "$MESON_FILE"
         output+=(--cross-file "$MESON_FILE")
     fi
     output+=(--cross-file "/assets/meson/cross.txt")

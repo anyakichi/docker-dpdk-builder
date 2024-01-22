@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SYSROOT=$WORKDIR/target
+SYSROOT=$WORKDIR/sysroot
 
 [[ ! -e $SYSROOT ]] && exit 0
 

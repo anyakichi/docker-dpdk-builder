@@ -1,2 +1,2 @@
 [constants]
-sysroot = '/build/target'
+sysroot = '/build/sysroot'

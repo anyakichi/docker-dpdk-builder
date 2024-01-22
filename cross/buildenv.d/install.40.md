@@ -14,7 +14,7 @@ Install DPDK.
 
 ```
 $ if [[ -n "\${CROSS_IMAGE}" ]]; then \
-    meson install -C build --destdir $WORKDIR/target; \
+    meson install -C build --destdir $WORKDIR/sysroot; \
   else \
     sudo meson install -C build; \
   fi
