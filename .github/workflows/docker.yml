@@ -9,7 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base: ["debian", "debian:bookworm", "ubuntu", "ubuntu:jammy", "ubuntu:focal"]
+        base:
+          [
+            "debian",
+            "debian:bookworm",
+            "ubuntu",
+            "ubuntu:noble",
+            "ubuntu:jammy",
+            "ubuntu:focal",
+          ]
     steps:
       - run: |
           BASE="${{ matrix.base }}"
