@@ -21,17 +21,21 @@ jobs:
     steps:
       - run: |
           BASE="${{ matrix.base }}"
-          TAG="${{ github.ref_name }}-${BASE#*:}"
+          REF="${{ github.ref_name }}"
+          if [[ ${{ github.ref_type }} == tag ]]; then
+            REF=${REF#v}
+          fi
+          TAG="$REF-${BASE#*:}"
           echo "TAG=$TAG" >> $GITHUB_ENV
           echo "TAGS<<EOF" >> $GITHUB_ENV
           if [[ $BASE == debian ]]; then
-            echo "${{ github.ref_name }}" >> $GITHUB_ENV
+            echo "$REF" >> $GITHUB_ENV
           fi
           echo "$TAG" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
           echo "TAGS_CROSS<<EOF" >> $GITHUB_ENV
           if [[ $BASE == debian ]]; then
-            echo "${{ github.ref_name }}-cross" >> $GITHUB_ENV
+            echo "$REF-cross" >> $GITHUB_ENV
           fi
           echo "$TAG-cross" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
