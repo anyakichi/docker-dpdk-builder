@@ -44,6 +44,11 @@ RUN \
     ; rm -rf /var/lib/apt/lists/*
 
 RUN \
+    if [ -e /home/ubuntu ]; then \
+        userdel -r ubuntu; \
+    fi
+
+RUN \
     useradd -ms /bin/bash builder \
     && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
