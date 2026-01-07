@@ -16,7 +16,6 @@ jobs:
             "ubuntu",
             "ubuntu:noble",
             "ubuntu:jammy",
-            "ubuntu:focal",
           ]
     steps:
       - run: |
