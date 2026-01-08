@@ -5,7 +5,7 @@ cpp = ['ccache', 'clang++']
 ar = 'llvm-ar'
 strip = 'llvm-strip'
 llvm-config = 'llvm-config'
-pkgconfig = 'pkg-config'
+pkg-config = 'pkg-config'
 
 [properties]
 platform = 'generic'
