@@ -1,20 +1,20 @@
 Stop the container.
 
 ```
-$ sudo docker stop \$id
+$ podman stop \$id
 ```
 
 Extract container image.
 
 ```
 $ mkdir -p sysroot
-$ sudo docker export \$id | tar -xf - -C sysroot
+$ podman export \$id | tar -xf - -C sysroot
 ```
 
 Remove the temporary container.
 
 ```
-$ $([[ -z "${CROSS_CONTAINER:-}" ]] && echo sudo docker rm \$id)
+$ $([[ -z "${CROSS_CONTAINER:-}" ]] && echo podman rm \$id)
 ```
 
 Change absolute symbolic links to relative ones.

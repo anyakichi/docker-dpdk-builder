@@ -2,9 +2,9 @@
 
 case "${CROSS_ARCH:-$(uname -m)}" in
 aarch64)
-    echo arm64
+    echo linux/arm64
     ;;
 x86_64)
-    echo amd64
+    echo linux/amd64
     ;;
 esac

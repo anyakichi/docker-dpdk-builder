@@ -1,8 +1,8 @@
 Install required packages.
 
 ```
-$ sudo docker exec \$id dnf update -y
-$ sudo docker exec \$id dnf install -y --skip-broken \
+$ podman exec \$id dnf update -y
+$ podman exec \$id dnf install -y --skip-broken \
       bzip2-devel \
       gcc \
       intel-ipsec-mb-devel \

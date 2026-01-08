@@ -5,7 +5,7 @@ RUN \
     apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
         clang \
-        docker.io \
+        podman \
         lld \
         llvm \
     && rm -rf /var/lib/apt/lists/*

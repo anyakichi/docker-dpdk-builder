@@ -61,7 +61,16 @@ Cross-build the latest DPDK for Ubuntu 20.04 ARM64 in the default
 environment (debian:latest).
 
 ```
-$ din -v /var/run/docker.sock:/var/run/docker.sock \
+$ din --privileged \
+    -e CROSS_IMAGE=ubuntu:focal -e CROSS_ARCH=aarch64 \
+    ghcr.io/anyakichi/dpdk-builder:main-cross
+```
+
+You can use individual parameters instead of `--privileged` (but
+required parameters depend on your environment).
+
+```
+$ din --cap-add SYS_ADMIN --security-opt systempaths=unconfined --device /dev/fuse \
     -e CROSS_IMAGE=ubuntu:focal -e CROSS_ARCH=aarch64 \
     ghcr.io/anyakichi/dpdk-builder:main-cross
 ```
