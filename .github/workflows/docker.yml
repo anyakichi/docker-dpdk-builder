@@ -12,6 +12,7 @@ jobs:
         base:
           [
             "debian",
+            "debian:trixie",
             "debian:bookworm",
             "ubuntu",
             "ubuntu:noble",

@@ -30,6 +30,7 @@ $ din -e DPDK_REV=v22.11 DPDK_GIT_URL=https://dpdk.org/git/dpdk-stable ghcr.io/a
 You can build DPDK in another environment by changing Docker image.
 
 - Debian (Latest LTS): ghcr.io/anyakichi/dpdk-builder:main-debian
+- Debian 13: ghcr.io/anyakichi/dpdk-builder:main-trixie
 - Debian 12: ghcr.io/anyakichi/dpdk-builder:main-bookworm
 - Ubuntu (Latest LTS): ghcr.io/anyakichi/dpdk-builder:main-ubuntu
 - Ubuntu 24.04: ghcr.io/anyakichi/dpdk-builder:main-noble
