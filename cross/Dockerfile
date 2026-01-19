@@ -26,4 +26,5 @@ ENV \
     CROSS_ALPINE_PKGS="" \
     CROSS_ARCHLINUX_PKGS="" \
     CROSS_DEBIAN_PKGS="" \
-    CROSS_FEDORA_PKGS=""
+    CROSS_FEDORA_PKGS="" \
+    PODMAN_RUN_OPTS="--network host"
