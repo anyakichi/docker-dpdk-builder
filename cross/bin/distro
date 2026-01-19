@@ -1,6 +1,7 @@
 #!/bin/bash
 
 NAME=${CROSS_IMAGE%:*}
+NAME=${NAME##*/}
 
 case "$NAME" in
     almalinux|rockylinux)
