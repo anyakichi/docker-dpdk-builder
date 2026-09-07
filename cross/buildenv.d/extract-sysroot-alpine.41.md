@@ -25,4 +25,9 @@ $ podman exec \$id apk add --no-cache \
     rdma-core-dev \
     zlib-dev \
     ${CROSS_ALPINE_PKGS}
+$ for i in ${CROSS_ALPINE_OPTIONAL_PKGS}; do \
+    podman exec \$id \
+      sh -c "apk search -e \$i | grep -q . && apk add --no-cache \$i"; \
+  done; \
+  true
 ```

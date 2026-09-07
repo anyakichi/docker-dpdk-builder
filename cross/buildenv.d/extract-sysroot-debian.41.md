@@ -29,7 +29,7 @@ $ podman exec -e DEBIAN_FRONTEND=noninteractive \$id \
       nettle-dev \
       pkgconf \
       ${CROSS_DEBIAN_PKGS}
-$ for i in libipsec-mb-dev libxdp-dev; do \
+$ for i in libipsec-mb-dev libxdp-dev ${CROSS_DEBIAN_OPTIONAL_PKGS}; do \
     podman exec -e DEBIAN_FRONTEND=noninteractive \$id \
       bash -c "apt-cache show \$i &>/dev/null && apt-get install -y \$i"; \
   done; \

@@ -23,4 +23,9 @@ $ podman exec \$id dnf install -y --skip-broken \
       xz-devel \
       zlib-devel \
       ${CROSS_FEDORA_PKGS}
+$ for i in ${CROSS_FEDORA_OPTIONAL_PKGS}; do \
+    podman exec \$id \
+      sh -c "dnf info \$i >/dev/null 2>&1 && dnf install -y \$i"; \
+  done; \
+  true
 ```
