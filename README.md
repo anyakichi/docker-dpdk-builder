@@ -33,6 +33,7 @@ You can build DPDK in another environment by changing Docker image.
 - Debian 13: ghcr.io/anyakichi/dpdk-builder:main-trixie
 - Debian 12: ghcr.io/anyakichi/dpdk-builder:main-bookworm
 - Ubuntu (Latest LTS): ghcr.io/anyakichi/dpdk-builder:main-ubuntu
+- Ubuntu 26.04: ghcr.io/anyakichi/dpdk-builder:main-resolute
 - Ubuntu 24.04: ghcr.io/anyakichi/dpdk-builder:main-noble
 - Ubuntu 22.04: ghcr.io/anyakichi/dpdk-builder:main-jammy
 

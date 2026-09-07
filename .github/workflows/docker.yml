@@ -15,6 +15,7 @@ jobs:
             "debian:trixie",
             "debian:bookworm",
             "ubuntu",
+            "ubuntu:resolute",
             "ubuntu:noble",
             "ubuntu:jammy",
           ]
