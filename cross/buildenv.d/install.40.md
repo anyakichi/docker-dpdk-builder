@@ -10,12 +10,21 @@ Build DPDK.
 $ buildenv build -y
 ```
 
+{% if "${CROSS_IMAGE}" -%}
+
+Install DPDK into the sysroot, so that a program built against it
+finds DPDK there.
+
+```
+$ meson install -C build --destdir ${WORKDIR}/sysroot
+```
+
+{%- else -%}
+
 Install DPDK.
 
 ```
-$ if [[ -n "\${CROSS_IMAGE}" ]]; then \
-    meson install -C build --destdir $WORKDIR/sysroot; \
-  else \
-    sudo meson install -C build; \
-  fi
+$ sudo meson install -C build
 ```
+
+{%- endif %}

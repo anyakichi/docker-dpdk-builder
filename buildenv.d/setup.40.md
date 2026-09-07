@@ -1,15 +1,5 @@
-Check the current directory.
+{% if "${PWD}" == "${WORKDIR}" -%}
 
-```
-$ [[ \$WORKDIR == \$PWD ]] || return 0
-```
+{% include setup-meson %}
 
-Execute meson in dpdk directory.
-
-```
-$ cd dpdk
-$ if meson configure | grep '^  platform ' &>/dev/null; then \
-    DPDK_PLATFORM_OPTS="-Dplatform=generic"; \
-  fi
-$ meson setup \${DPDK_PLATFORM_OPTS} ${DPDK_MESON_OPTS} build
-```
+{%- endif %}

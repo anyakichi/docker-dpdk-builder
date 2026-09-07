@@ -1,6 +1,8 @@
-Clone DPDK repository.
+Clone the DPDK repository.
 
 ```
 $ git clone ${DPDK_GIT_URL:-https://github.com/DPDK/dpdk} dpdk
-$ git -C dpdk checkout ${DPDK_REV:-main}
+{% if "${DPDK_REV:-}" %}
+$ git -C dpdk checkout ${DPDK_REV}
+{% endif %}
 ```
