@@ -43,7 +43,7 @@ $ din -e DPDK_MESON_OPTS=-Dexamples=all ghcr.io/anyakichi/dpdk-builder:main
 
 You can build DPDK in another environment by changing Docker image.
 
-- Debian (Latest LTS): ghcr.io/anyakichi/dpdk-builder:main-debian
+- Debian (Latest stable): ghcr.io/anyakichi/dpdk-builder:main-debian
 - Debian 13: ghcr.io/anyakichi/dpdk-builder:main-trixie
 - Debian 12: ghcr.io/anyakichi/dpdk-builder:main-bookworm
 - Ubuntu (Latest LTS): ghcr.io/anyakichi/dpdk-builder:main-ubuntu
@@ -72,12 +72,12 @@ $ din --platform arm64 ghcr.io/anyakichi/dpdk-builder:main
 dpdk-builder also supports cross-building for different architectures
 and distributions.
 
-Cross-build the latest DPDK for Ubuntu 20.04 ARM64 in the default
+Cross-build the latest DPDK for Ubuntu 22.04 ARM64 in the default
 environment (debian:latest).
 
 ```
 $ din --privileged \
-    -e CROSS_IMAGE=ubuntu:focal -e CROSS_ARCH=aarch64 \
+    -e CROSS_IMAGE=ubuntu:jammy -e CROSS_ARCH=aarch64 \
     ghcr.io/anyakichi/dpdk-builder:main-cross
 ```
 
@@ -86,7 +86,7 @@ required parameters depend on your environment).
 
 ```
 $ din --cap-add SYS_ADMIN --security-opt systempaths=unconfined --device /dev/fuse \
-    -e CROSS_IMAGE=ubuntu:focal -e CROSS_ARCH=aarch64 \
+    -e CROSS_IMAGE=ubuntu:jammy -e CROSS_ARCH=aarch64 \
     ghcr.io/anyakichi/dpdk-builder:main-cross
 ```
 
