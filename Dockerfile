@@ -36,7 +36,7 @@ RUN \
         ccache \
         git \
         sudo \
-    && for i in libipsec-mb-dev libxdp-dev; do \
+    && for i in libipsec-mb-dev libjitterentropy3-dev libxdp-dev; do \
         if apt-cache show "$i" >/dev/null 2>&1; then \
             DEBIAN_FRONTEND=noninteractive apt-get install -y $i; \
         fi \

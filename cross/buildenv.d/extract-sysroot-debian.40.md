@@ -37,7 +37,7 @@ Install the packages that not every release has, each of them where
 it is.
 
 ```
-$ for i in libipsec-mb-dev libxdp-dev ${CROSS_DEBIAN_OPTIONAL_PKGS}; do
+$ for i in libipsec-mb-dev libjitterentropy3-dev libxdp-dev ${CROSS_DEBIAN_OPTIONAL_PKGS}; do
 >     if podman exec \$id apt-cache show \$i &>/dev/null; then
 >         podman exec -e DEBIAN_FRONTEND=noninteractive \$id apt-get install -y \$i
 >     fi
