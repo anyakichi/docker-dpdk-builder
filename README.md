@@ -24,7 +24,7 @@ $ din -e DPDK_REV=v22.11 ghcr.io/anyakichi/dpdk-builder:main
 Build v22.11 of DPDK in the stable repository.
 
 ```
-$ din -e DPDK_REV=v22.11 DPDK_GIT_URL=https://dpdk.org/git/dpdk-stable ghcr.io/anyakichi/dpdk-builder:main
+$ din -e DPDK_REV=v22.11 -e DPDK_GIT_URL=https://dpdk.org/git/dpdk-stable ghcr.io/anyakichi/dpdk-builder:main
 ```
 
 You can build DPDK in another environment by changing Docker image.
