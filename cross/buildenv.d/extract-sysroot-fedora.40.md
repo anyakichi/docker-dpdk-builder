@@ -18,7 +18,6 @@ $ podman exec \$id dnf update -y
 $ podman exec \$id dnf install -y --skip-broken \
 >     bzip2-devel \
 >     gcc \
->     intel-ipsec-mb-devel \
 >     jansson-devel \
 >     libacl-devel \
 >     libarchive-devel \
@@ -26,7 +25,6 @@ $ podman exec \$id dnf install -y --skip-broken \
 >     libbsd-devel \
 >     libfdt-devel \
 >     libpcap-devel \
->     libxdp-devel \
 >     libxml2-devel \
 >     libzstd-devel \
 >     lz4-devel \
@@ -44,7 +42,7 @@ Install the packages that not every release has, each of them where
 it is.
 
 ```
-$ for i in ${CROSS_FEDORA_OPTIONAL_PKGS}; do
+$ for i in intel-ipsec-mb-devel libxdp-devel ${CROSS_FEDORA_OPTIONAL_PKGS}; do
 >     if podman exec \$id dnf info \$i >/dev/null 2>&1; then
 >         podman exec \$id dnf install -y \$i
 >     fi

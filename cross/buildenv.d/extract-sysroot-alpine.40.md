@@ -17,7 +17,6 @@ $ podman exec \$id apk add --no-cache \
 >     libbsd-dev \
 >     libc-dev \
 >     libpcap-dev \
->     libxdp-dev \
 >     linux-headers \
 >     lz4-dev \
 >     musl-dev \
@@ -34,7 +33,7 @@ Install the packages that not every release has, each of them where
 it is.
 
 ```
-$ for i in ${CROSS_ALPINE_OPTIONAL_PKGS}; do
+$ for i in libxdp-dev ${CROSS_ALPINE_OPTIONAL_PKGS}; do
 >     if podman exec \$id apk search -e \$i | grep -q .; then
 >         podman exec \$id apk add --no-cache \$i
 >     fi
