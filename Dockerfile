@@ -41,7 +41,7 @@ RUN \
             DEBIAN_FRONTEND=noninteractive apt-get install -y $i; \
         fi \
        done \
-    ; rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 RUN \
     if [ -e /home/ubuntu ]; then \
