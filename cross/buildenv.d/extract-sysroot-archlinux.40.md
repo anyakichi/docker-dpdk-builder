@@ -17,6 +17,7 @@ $ podman exec \$id pacman --noconfirm --needed -S \
 >     libxdp \
 >     numactl \
 >     openssl \
+>     pkgconf \
 >     rdma-core
 {% if "${CROSS_ARCHLINUX_PKGS}" %}
 $ podman exec \$id pacman --noconfirm --needed -S ${CROSS_ARCHLINUX_PKGS}
