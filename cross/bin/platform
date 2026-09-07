@@ -1,10 +1,20 @@
 #!/bin/bash
 
-case "${CROSS_ARCH:-$(uname -m)}" in
+# The platform of podman for CROSS_ARCH, or for the machine where it is not
+# set.  An architecture that is not one of ours is an error, not an empty
+# word, which podman would take the next option for.
+
+ARCH=${CROSS_ARCH:-$(uname -m)}
+
+case "$ARCH" in
 aarch64)
     echo linux/arm64
     ;;
 x86_64)
     echo linux/amd64
+    ;;
+*)
+    echo "platform: unsupported architecture: $ARCH" >&2
+    exit 1
     ;;
 esac

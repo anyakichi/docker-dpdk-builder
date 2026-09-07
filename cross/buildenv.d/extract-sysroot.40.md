@@ -1,4 +1,13 @@
-{% if "${CROSS_IMAGE}" -%}
+{% if "${CROSS_IMAGE}" && -z "$(platform)" -%}
+
+CROSS_ARCH is not one of x86_64 and aarch64, as the message above
+says, and there is no container to run for it.
+
+```
+$ exit 1
+```
+
+{%- elif "${CROSS_IMAGE}" -%}
 
 Run a temporary container from ${CROSS_IMAGE}.
 

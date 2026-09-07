@@ -1,7 +1,13 @@
 #!/bin/bash
 
-NAME=${CROSS_IMAGE%:*}
-NAME=${NAME##*/}
+# The distribution of CROSS_IMAGE, by the name of the image: the last
+# component of the path, without the tag or the digest.  A registry with a
+# port has a colon too, hence the path is cut first.
+
+set -o nounset
+
+NAME=${CROSS_IMAGE##*/}
+NAME=${NAME%%[:@]*}
 
 case "$NAME" in
     almalinux|rockylinux)
