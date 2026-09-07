@@ -1,3 +1,15 @@
+Enable CRB (EL9) or PowerTools (EL8) repository if available.
+
+```
+$ for i in crb powertools; do \
+    podman exec \$id \
+      sh -c "dnf repolist --all | grep -q '^\$i ' \
+        && dnf install -y dnf-plugins-core \
+        && dnf config-manager --set-enabled \$i"; \
+  done; \
+  true
+```
+
 Install required packages.
 
 ```
