@@ -11,7 +11,7 @@ RUN \
         ninja-build \
         pkgconf \
         python3-pyelftools \
-    # Addtional libraries
+    # Additional libraries
         libacl1-dev \
         libarchive-dev \
         libbpf-dev \
@@ -67,7 +67,11 @@ COPY buildenv/buildenv.sh /usr/local/bin/buildenv
 COPY buildenv/buildenv.conf /etc/
 COPY buildenv.d/ /etc/buildenv.d/
 
-RUN sed -i 's/^#DOTCMDS=.*/DOTCMDS=setup/' /etc/buildenv.conf
+# Aliases are for the commands, not for the documents they include.
+RUN sed -i \
+    -e 's/^#ALIASES=.*/ALIASES="extract setup build install"/' \
+    -e 's/^#DOTCMDS=.*/DOTCMDS=setup/' \
+    /etc/buildenv.conf
 
 ENTRYPOINT ["/buildenv-entrypoint.sh"]
 CMD ["/bin/bash"]
