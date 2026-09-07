@@ -1,19 +1,34 @@
 #!/bin/bash
 
-ARCH=${CROSS_ARCH:-$(uname -m)}
-DISTRO=$(distro)
+# Print the machine-file options of meson setup: the cross files for a build
+# against a sysroot, or the native file for a build in the container itself.
 
-if [[ $CROSS_IMAGE ]]; then
+set -o errexit
+set -o nounset
+
+ARCH=${CROSS_ARCH:-$(uname -m)}
+
+if [[ ${CROSS_IMAGE:-} ]]; then
+    DISTRO=$(distro)
+    SYSROOT=$WORKDIR/sysroot
+
+    if [[ ! -d $SYSROOT ]]; then
+        echo "meson-cross-opts: no sysroot in $WORKDIR; run extract first" >&2
+        exit 1
+    fi
+
     output=(--cross-file "/assets/meson/common.txt")
     output+=(--cross-file "/assets/meson/sysroot.txt")
     output+=(--cross-file "/assets/meson/arch_${ARCH}.txt")
     if [[ $DISTRO == alpine ]]; then
         output+=(--cross-file "/assets/meson/arch_${ARCH}_alpine.txt")
     fi
+    # sysroot.txt names /build/sysroot, which is where din mounts the tree;
+    # a tree mounted elsewhere gets a file of its own that overrides it.
     if [[ $WORKDIR != /build ]]; then
-        MESON_FILE="$WORKDIR/sysroot/meson_sysroot.txt"
+        MESON_FILE="$SYSROOT/meson_sysroot.txt"
         echo "[constants]" > "$MESON_FILE"
-        echo "sysroot = '$WORKDIR/sysroot'" >> "$MESON_FILE"
+        echo "sysroot = '$SYSROOT'" >> "$MESON_FILE"
         output+=(--cross-file "$MESON_FILE")
     fi
     output+=(--cross-file "/assets/meson/cross.txt")
