@@ -2,11 +2,14 @@
 
 The sysroot is not there, or pkg-config cannot be run in it, and the
 build is not configured without it; the message above says which.
-This document is sourced, hence the return rather than an exit.
+This document is sourced by setup and included by build and install,
+hence the return where there is a caller to return to, and the exit
+where there is none, since a return fails there and would end the
+script with a message and a status of its own.
 
 ```
 $ echo "buildenv: the sysroot in ${WORKDIR} is not usable; see above" >&2
-$ return 1
+$ return 1 2>/dev/null || exit 1
 ```
 
 {%- elif "${CROSS_IMAGE}" -%}

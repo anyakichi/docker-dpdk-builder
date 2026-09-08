@@ -1,14 +1,4 @@
-Setup build environment before building.
-
-```
-$ . <(buildenv setup)
-```
-
-Build DPDK.
-
-```
-$ buildenv build -y
-```
+{% include build -%}
 
 Install DPDK.
 

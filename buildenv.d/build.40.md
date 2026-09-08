@@ -1,8 +1,4 @@
-Setup build environment before building.
-
-```
-$ . <(buildenv setup)
-```
+{% include setup -%}
 
 Do build.
 
