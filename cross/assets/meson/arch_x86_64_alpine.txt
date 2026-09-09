@@ -1,2 +1,0 @@
-[constants]
-arch = 'x86_64-alpine-linux-musl'

@@ -1,2 +1,0 @@
-[constants]
-sysroot = '/build/sysroot'

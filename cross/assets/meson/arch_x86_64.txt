@@ -1,8 +1,0 @@
-[constants]
-arch = 'x86_64-linux-gnu'
-
-[host_machine]
-system = 'linux'
-cpu_family = 'x86_64'
-cpu = 'x86-64-v3'
-endian = 'little'

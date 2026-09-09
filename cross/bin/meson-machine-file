@@ -1,0 +1,115 @@
+#!/bin/bash
+
+# Print the machine file of meson: the cross file for a build against the
+# sysroot, or the native file for a build in the container itself.  The
+# document of setup writes it out with a here-document, so that the manual
+# shows the file as it is written and not the name of one in the image, and a
+# reader can copy it out as it is.
+#
+# The sysroot is named as $WORKDIR/sysroot and left for the shell that writes
+# the file out, so that the manual shows the variable and not the path it has
+# in this container.  The constants are read in order, hence the ones below
+# can be written in terms of the ones above.  The triple names the C library as well, since musl is what alpine
+# has and clang is told so by the target.
+#
+# The environment of pkg-config is written in the file too, as the properties
+# meson sets it from.  Nothing is printed and the exit status is non-zero when
+# there is no sysroot or pkg-config cannot be run in it, so that a build is
+# never configured against an empty pkg_config_libdir, which finds no library
+# at all and drops most of DPDK without a word.
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+binaries() {
+    cat <<EOF
+[binaries]
+c = ['ccache', 'clang']
+c_ld = 'lld'
+cpp = ['ccache', 'clang++']
+ar = 'llvm-ar'
+strip = 'llvm-strip'
+llvm-config = 'llvm-config'
+pkg-config = 'pkg-config'
+EOF
+}
+
+if [[ -z ${CROSS_IMAGE:-} ]]; then
+    binaries
+    cat <<EOF
+
+[properties]
+platform = 'generic'
+EOF
+    exit 0
+fi
+
+ARCH=${CROSS_ARCH:-$(uname -m)}
+
+case "$ARCH" in
+aarch64)
+    CPU=armv8-a
+    ;;
+x86_64)
+    CPU=x86-64-v3
+    ;;
+*)
+    echo "meson-machine-file: unsupported architecture: $ARCH" >&2
+    exit 1
+    ;;
+esac
+
+if [[ $(distro) == alpine ]]; then
+    TRIPLE=$ARCH-alpine-linux-musl
+else
+    TRIPLE=$ARCH-linux-gnu
+fi
+
+SYSROOT=$WORKDIR/sysroot
+
+if [[ ! -e $SYSROOT ]]; then
+    echo "meson-machine-file: no sysroot in $WORKDIR; run extract first" >&2
+    exit 1
+fi
+
+# The pc_path is asked of the sysroot's own pkg-config, since the directories
+# are the distribution's, multiarch or lib64 or plain lib.
+if ! pc_path=$(sudo chroot "$SYSROOT" pkg-config --variable pc_path pkg-config) ||
+    [[ -z $pc_path ]]; then
+    echo "meson-machine-file: cannot run pkg-config in $SYSROOT" >&2
+    exit 1
+fi
+
+libdir=""
+IFS=: read -ra dirs <<<"$pc_path"
+for dir in "${dirs[@]}"; do
+    libdir+="${libdir:+, }sysroot / '${dir#/}'"
+done
+
+cat <<EOF
+[constants]
+sysroot = '\$WORKDIR/sysroot'
+arch = '$TRIPLE'
+common_flags = ['--sysroot=' + sysroot, '-target', arch]
+
+EOF
+binaries
+cat <<EOF
+
+[host_machine]
+system = 'linux'
+cpu_family = '$ARCH'
+cpu = '$CPU'
+endian = 'little'
+
+[properties]
+platform = 'generic'
+sys_root = sysroot
+pkg_config_libdir = [$libdir]
+
+[built-in options]
+c_args = common_flags
+c_link_args = common_flags + ['--gcc-toolchain=' + sysroot / 'usr']
+pkg_config_path = sysroot / 'usr/local/lib/pkgconfig'
+EOF

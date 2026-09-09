@@ -120,5 +120,12 @@ $ din --privileged \
 `PODMAN_RUN_OPTS` holds the options of the podman run of that
 container; it is `--network host` unless set.
 
+setup writes the cross file of meson to `meson-cross.txt` in the
+mounted directory, next to the sysroot, so that the manual of `setup -m`
+shows the file as it is written and a build of your own can use it too.
+The file points pkg-config into the sysroot as well, and names the
+sysroot by `WORKDIR`, which is the mounted directory in the container.
+Without `CROSS_IMAGE` it is the native file, `meson-native.txt`.
+
 install installs DPDK into the sysroot instead of the container, so
 that a program cross-built against the sysroot finds it there.

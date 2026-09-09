@@ -10,7 +10,6 @@ RUN \
         llvm \
     && rm -rf /var/lib/apt/lists/*
 
-COPY assets/ /assets/
 COPY bin/ /usr/local/bin/
 COPY buildenv.d/ /etc/buildenv.d/
 
