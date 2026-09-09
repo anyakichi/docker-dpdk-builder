@@ -1,4 +1,4 @@
-{% include setup -%}
+{% include setup %}
 
 Do build.
 

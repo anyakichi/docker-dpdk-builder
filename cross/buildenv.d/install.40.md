@@ -1,4 +1,4 @@
-{% include build -%}
+{% include build %}
 
 {% if "${CROSS_IMAGE}" -%}
 
