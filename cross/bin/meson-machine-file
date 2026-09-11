@@ -15,6 +15,15 @@
 # written in terms of the ones above.  The triple names the C library as
 # well, since musl is what alpine has and clang is told so by the target.
 #
+# What the binaries are built for is named by an architecture's own variable,
+# since DPDK reads a different thing for each.  On x86_64 it takes the cpu of
+# the host machine as the -march of the compiler, and CROSS_X86_64_MARCH is
+# that name, x86-64-v3 unless set.  On aarch64 it ignores the cpu and reads
+# the platform property instead, the name of a SoC in its config/arm/meson.build
+# from which it derives the -mcpu and its own constants, and CROSS_AARCH64_SOC
+# is that name, generic unless set.  The property is written for aarch64 only,
+# since x86_64 never looks at it.
+#
 # The directories of pkg-config are not in the file: they are the
 # distribution's, multiarch or lib64 or plain lib, and extract writes down
 # what the pkg-config of the container says in sysroot/.pc_path, which the
@@ -43,11 +52,6 @@ EOF
 
 if [[ -z ${CROSS_IMAGE:-} ]]; then
     binaries
-    cat <<EOF
-
-[properties]
-platform = 'generic'
-EOF
     exit 0
 fi
 
@@ -56,9 +60,11 @@ ARCH=${CROSS_ARCH:-$(uname -m)}
 case "$ARCH" in
 aarch64)
     CPU=armv8-a
+    SOC=${CROSS_AARCH64_SOC:-generic}
     ;;
 x86_64)
-    CPU=x86-64-v3
+    CPU=${CROSS_X86_64_MARCH:-x86-64-v3}
+    SOC=
     ;;
 *)
     echo "meson-machine-file: unsupported architecture: $ARCH" >&2
@@ -94,6 +100,8 @@ c_link_args = common_flags + ['--gcc-toolchain=' + sysroot / 'usr']
 pkg_config_path = sysroot / 'usr/local/lib/pkgconfig'
 
 [properties]
-platform = 'generic'
-sys_root = sysroot
 EOF
+if [[ $SOC ]]; then
+    echo "platform = '$SOC'"
+fi
+echo "sys_root = sysroot"

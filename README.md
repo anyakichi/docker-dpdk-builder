@@ -117,6 +117,21 @@ with self-compile mode.
 `CROSS_ARCH` must be either x86_64 or aarch64.  If not specified, the
 architecture of the container will be used.
 
+A cross build is not for the machine it is built on, so what the
+binaries are built for is named by a variable of the architecture, and
+`-Dplatform=generic` does nothing here.  `CROSS_X86_64_MARCH` is the
+-march of the compiler for x86_64, x86-64-v3 unless set, which is what
+the processors of the last ten years or so have.  `CROSS_AARCH64_SOC`
+is the SoC DPDK builds for on aarch64, one of the names in its
+config/arm/meson.build, generic unless set.  Cross-build for Graviton3.
+
+```
+$ din --privileged \
+    -e CROSS_IMAGE=ubuntu:noble -e CROSS_ARCH=aarch64 \
+    -e CROSS_AARCH64_SOC=graviton3 \
+    ghcr.io/anyakichi/dpdk-builder:main-cross
+```
+
 The container of `CROSS_IMAGE` is run with podman inside the builder
 container, which is what `--privileged` or the parameters above are
 for.  A container of another architecture runs with qemu-user-static,

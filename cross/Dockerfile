@@ -22,6 +22,8 @@ ARG cross_image=""
 ENV \
     CROSS_ARCH=${cross_arch} \
     CROSS_IMAGE=${cross_image} \
+    CROSS_AARCH64_SOC=generic \
+    CROSS_X86_64_MARCH=x86-64-v3 \
     CROSS_ALPINE_PKGS="" \
     CROSS_ALPINE_OPTIONAL_PKGS="" \
     CROSS_ARCHLINUX_PKGS="" \
