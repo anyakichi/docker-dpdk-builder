@@ -21,6 +21,18 @@ that is built against it there.
 builder@dpdk:/build$ install
 ```
 
+build and install take the steps of setup themselves when they are run
+in the mounted directory, which is where a shell that has not been set
+up is; setup leaves the shell in the dpdk directory.
+
+The manuals of extract and build, joined with a blank line, are the
+whole procedure from an empty directory to the built DPDK, and can be
+printed before anything is done.
+
+```
+builder@dpdk:/build$ { extract -m; echo; build -m; } > BUILD.md
+```
+
 You can use environment variables to change DPDK revision.  Build v22.11
 of DPDK.
 
@@ -39,6 +51,14 @@ examples as well.
 
 ```
 $ din -e DPDK_MESON_OPTS=-Dexamples=all ghcr.io/anyakichi/dpdk-builder:main
+```
+
+DPDK builds for the machine it is built on unless told otherwise.  Set
+the platform to generic for binaries that run on any machine of the
+architecture (the option came with v21.05).
+
+```
+$ din -e DPDK_MESON_OPTS=-Dplatform=generic ghcr.io/anyakichi/dpdk-builder:main
 ```
 
 You can build DPDK in another environment by changing Docker image.
@@ -123,9 +143,11 @@ container; it is `--network host` unless set.
 setup writes the cross file of meson to `meson-cross.txt` in the
 mounted directory, next to the sysroot, so that the manual of `setup -m`
 shows the file as it is written and a build of your own can use it too.
-The file points pkg-config into the sysroot as well, and names the
-sysroot by `WORKDIR`, which is the mounted directory in the container.
-Without `CROSS_IMAGE` it is the native file, `meson-native.txt`.
+The file points pkg-config into the sysroot as well, at the directories
+the pkg-config of the container searches, which extract writes down in
+`sysroot/.pc_path`, and names the sysroot by `WORKDIR`, which is the
+mounted directory in the container.  Without `CROSS_IMAGE` it is the
+native file, `meson-native.txt`.
 
 install installs DPDK into the sysroot instead of the container, so
 that a program cross-built against the sysroot finds it there.

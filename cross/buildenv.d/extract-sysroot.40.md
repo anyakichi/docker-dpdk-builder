@@ -17,6 +17,14 @@ $ id=\$(podman run ${PODMAN_RUN_OPTS} --platform $(platform) -d ${CROSS_IMAGE} t
 
 {% include extract-sysroot-$(distro) %}
 
+Write down the directories pkg-config searches, in the root of the
+container so that it comes out with the rootfs, and setup points the
+pkg-config of the build at the same ones in the sysroot.
+
+```
+$ podman exec \$id sh -c 'pkg-config --variable pc_path pkg-config > /.pc_path'
+```
+
 Stop the container.
 
 ```

@@ -6,17 +6,23 @@
 # shows the file as it is written and not the name of one in the image, and a
 # reader can copy it out as it is.
 #
-# The sysroot is named as $WORKDIR/sysroot and left for the shell that writes
-# the file out, so that the manual shows the variable and not the path it has
-# in this container.  The constants are read in order, hence the ones below
-# can be written in terms of the ones above.  The triple names the C library as well, since musl is what alpine
-# has and clang is told so by the target.
+# Nothing of the file is read from the sysroot, so that the file is the same
+# whenever it is printed, before extract as well as after it, and the manual
+# of build is the whole procedure wherever it is written from.  The sysroot is
+# named as $WORKDIR/sysroot and left for the shell that writes the file out,
+# so that the manual shows the variable and not the path it has in this
+# container.  The constants are read in order, hence the ones below can be
+# written in terms of the ones above.  The triple names the C library as
+# well, since musl is what alpine has and clang is told so by the target.
 #
-# The environment of pkg-config is written in the file too, as the properties
-# meson sets it from.  Nothing is printed and the exit status is non-zero when
-# there is no sysroot or pkg-config cannot be run in it, so that a build is
-# never configured against an empty pkg_config_libdir, which finds no library
-# at all and drops most of DPDK without a word.
+# The directories of pkg-config are not in the file: they are the
+# distribution's, multiarch or lib64 or plain lib, and extract writes down
+# what the pkg-config of the container says in sysroot/.pc_path, which the
+# document of setup appends to the file after this.  The properties are
+# therefore the last section, so that the line appended joins them.  Nothing
+# is printed and the exit status is non-zero when CROSS_ARCH is not one of
+# ours, so that a build is never configured for an architecture nothing here
+# knows.
 
 set -o errexit
 set -o nounset
@@ -66,27 +72,6 @@ else
     TRIPLE=$ARCH-linux-gnu
 fi
 
-SYSROOT=$WORKDIR/sysroot
-
-if [[ ! -e $SYSROOT ]]; then
-    echo "meson-machine-file: no sysroot in $WORKDIR; run extract first" >&2
-    exit 1
-fi
-
-# The pc_path is asked of the sysroot's own pkg-config, since the directories
-# are the distribution's, multiarch or lib64 or plain lib.
-if ! pc_path=$(sudo chroot "$SYSROOT" pkg-config --variable pc_path pkg-config) ||
-    [[ -z $pc_path ]]; then
-    echo "meson-machine-file: cannot run pkg-config in $SYSROOT" >&2
-    exit 1
-fi
-
-libdir=""
-IFS=: read -ra dirs <<<"$pc_path"
-for dir in "${dirs[@]}"; do
-    libdir+="${libdir:+, }sysroot / '${dir#/}'"
-done
-
 cat <<EOF
 [constants]
 sysroot = '\$WORKDIR/sysroot'
@@ -103,13 +88,12 @@ cpu_family = '$ARCH'
 cpu = '$CPU'
 endian = 'little'
 
-[properties]
-platform = 'generic'
-sys_root = sysroot
-pkg_config_libdir = [$libdir]
-
 [built-in options]
 c_args = common_flags
 c_link_args = common_flags + ['--gcc-toolchain=' + sysroot / 'usr']
 pkg_config_path = sysroot / 'usr/local/lib/pkgconfig'
+
+[properties]
+platform = 'generic'
+sys_root = sysroot
 EOF
