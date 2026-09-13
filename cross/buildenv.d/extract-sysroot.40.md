@@ -15,6 +15,10 @@ Run a temporary container from ${CROSS_IMAGE}.
 $ id=\$(podman run ${PODMAN_RUN_OPTS} --platform $(platform) -d ${CROSS_IMAGE} tail -f /dev/null)
 ```
 
+If a step fails, the temporary container remains.  Find its ID with
+`podman ps -a` and remove it with `podman rm -f <container-id>`
+before retrying.
+
 {% include extract-sysroot-$(distro) %}
 
 Write down the directories pkg-config searches, in the root of the
